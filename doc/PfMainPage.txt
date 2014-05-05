@@ -1,0 +1,3 @@
+/*! @mainpage Introduction
+		From this moment here will be basic project information
+*/

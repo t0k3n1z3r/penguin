@@ -1,0 +1,53 @@
+/*! @page "Code Style" Penguin Framework coding style
+	@tableofcontents
+		In the Penguin Framework [PF] used the following coding standard
+	@section PfFileNameSec File naming convention
+		File name strcture: [prefix][filename].[extension]
+		All files named using camel style.
+		Example: PfCore.h, where Pf - [prefix], Core - [filename] and h - extension.
+	@section PfFileProtSec File protectors naming conventions
+		File protector name strcture: _[prefix]_[filename]_[extension]_
+		File protector name should be written @b ONLY with capital characters.
+		'_' symbol should be used to split the words in file protector name.
+		Example:
+		@code{.c}
+			#ifndef _PF_CORE_H_
+			#define _PF_CORE_H_
+			#endif	/* !_PF_CORE_H_ */
+		@endcode
+		After @c endif statement set '!' character before file protector name. It show to which
+		@c define @c endif belongs.
+	@section PfVarNameSec Variable naming conventions
+		All variables should be named using camel style.
+		If variable has local visibility (or function parameter) then 1 word of the variable should
+		be named with small letter and all other world shold be started with capital letters.
+		In case of global or static variable [prefix] should be used before variable name.
+		Variable name structure: [prefix][variable name] ('g_' for global variable and 's_' for
+		static variable). Examples: \b 'currentProcessContext' for local variable,
+		\b 'g_currentProcessContext' for global variable and \b 's_currentProcessContext' for static
+		variable.
+	@section PfFuncNameSec Function naming conventions
+		Function name structure: [function type][return type][prefix][function name]([param list]),
+		where [function type]
+		Function declaration:
+		@code{.c}
+			PFAPI PF_STATUS PfOutputDebugString(PfDebuggerContext* const context, char* str);
+		@endcode
+		Function definition:
+		@code{.c}
+			PFAPI PF_STATUS PfOutputDebugString(PfDebuggerContext* const context, char* str)
+			{
+				PF_STATUS result = PF_STATUS_OK;
+
+				/*
+				* TODO: Implement context verificaiton
+				*/
+
+				printf(str);
+
+				return result;
+			}
+		@endcode
+	@section PfCommentSec Comments format
+		For the PF used the following comments convention.
+*/

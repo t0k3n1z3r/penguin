@@ -1,0 +1,37 @@
+{
+    "folders":
+    [
+        {
+            "path": "../../doc",
+            "name": "Documentation"
+        },
+        {
+            "path": "../../include",
+            "name": "Includes"
+        },
+        {
+            "path": "../../source",
+            "name": "Sources"
+        },
+        {
+            "path": "../../test",
+            "name": "Tests"
+        },
+        {
+            "path": "../../examples",
+            "name": "Example"
+        }
+    ],
+    "settings":
+    {
+        "tab_size": 4,
+        "rulers": [100]
+    },
+    "build_systems":
+    [
+        {
+            "name": "List",
+            "cmd": ["ls"]
+        }
+    ]
+}

@@ -15,7 +15,7 @@
 /**
 ****************************************************************************************************
 * @def PFAPI
-* @brief PFAPI is used to mark function that may be used outside the project
+* @brief PFAPI is used to mark function that may be used outside the project (module).
 ****************************************************************************************************
 */
 #define PFAPI

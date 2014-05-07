@@ -17,15 +17,29 @@
 
 /**
 ****************************************************************************************************
+* @enum PF_CONTEXT_STATE
+* @brief Defines states of the PF structures and classes that contain PfHeader.
+* @ingroup	PfCore
+****************************************************************************************************
+*/
+typedef enum
+{
+	PF_CONTEXT_STATE_INITIALIZED = 0, ///< Owner structure is initialized
+	PF_CONTEXT_STATE_UNINITIALIZED = 1 ///< Owner structure is uninitialized
+} PF_CONTEXT_STATE;
+
+/**
+****************************************************************************************************
 * @struct PfHeader
 * @brief Penguin Framework header structure. It contains owner structure size, type and state.
+* @ingroup	PfCore
 ****************************************************************************************************
 */
 typedef struct
 {
 	Udword size; ///< Owner structure size
 	Udword type; ///< Owner structure type
-	Udword state; ///< Owner structure state
+	PF_CONTEXT_STATE state : 32; ///< Owner structure state
 } PfHeader;
 
 #endif /* !_PF_HEADER_H_ */

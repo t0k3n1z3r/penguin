@@ -3,12 +3,12 @@
 * @file 	PfMain.c
 * @brief 	Penguin Framework [PF] entry point
 * @author	Maksym Koshel (maks.koshel@gmail.com)
-* @date 	Apr 23, 2014
+* @date 	May 05, 2014
 * @copyright Maksym Koshel (c) 2014. All rights reserved.
 ****************************************************************************************************
 */
 
-#include <stdio.h>
+#include "libcore/PfDebug.h"
 
 /**
 ****************************************************************************************************
@@ -20,6 +20,6 @@
 */
 int main(int argc, char* argv[])
 {
-	printf("Hello from penguin module");
+	PF_LOG_E(PF_DEBUG_CLASS_CORE, "Hello from penguin module\n");
 	return 0;
 }

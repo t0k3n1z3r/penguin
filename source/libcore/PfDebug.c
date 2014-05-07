@@ -14,6 +14,20 @@
 
 /**
 ****************************************************************************************************
+* @brief	This array is used to map debug level to corresponding string for output
+****************************************************************************************************
+*/
+static const char* s_debugLevelAliases[] = {"ERR","WARN", "INFO"};
+
+/**
+****************************************************************************************************
+* @brief	This array is used to map debug class to corresponding string for output
+****************************************************************************************************
+*/
+static const char* s_debugClassAliases[] = {"????", "CORE", "TRST", "PRTL", "PENG"};
+
+/**
+****************************************************************************************************
 * @brief	Print debug prepared string to the output buffer using PfDebugContext.
 * @param	[in] pContext pointer to the debugging context.
 * @param 	[in] pMessage pointer to the message that should be printed.
@@ -21,7 +35,6 @@
 ****************************************************************************************************
 */
 void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage);
-
 /**
 ****************************************************************************************************
 *
@@ -46,6 +59,11 @@ PF_STATUS PFAPI PfCloseDebugContext(PfDebugContext* const context)
 	return result;
 }
 
+/**
+****************************************************************************************************
+*
+****************************************************************************************************
+*/
 PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBUG_LEVEL debugLevel,
 	const char* const format, ...)
 {
@@ -56,5 +74,20 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 
 void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage)
 {
-	printf("[%p]: %s", pContext, pMessage);
+	if (NULL != pContext && pContext->header.size == sizeof(PfDebugContext))
+	{
+		if (PF_CONTEXT_STATE_INITIALIZED == pContext->header.state)
+		{
+			char outputBuffer[512] = {0,};
+			printf("[%p]: %s", pContext, pMessage);
+		}
+		else
+		{
+			printf("Debug context was not initialized!\n");
+		}
+	}
+	else
+	{
+		printf("Debug context for this module is %p\n", pContext);
+	}
 }

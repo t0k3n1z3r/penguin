@@ -1,53 +1,259 @@
-/*! @page "Code Style" Penguin Framework coding style
+/*! @page "Code Style" Penguin Framework [PF] coding style
 	@tableofcontents
-		In the Penguin Framework [PF] used the following coding standard
-	@section PfFileNameSec File naming convention
-		File name strcture: [prefix][filename].[extension]
-		All files named using camel style.
-		Example: PfCore.h, where Pf - [prefix], Core - [filename] and h - extension.
-	@section PfFileProtSec File protectors naming conventions
-		File protector name strcture: _[prefix]_[filename]_[extension]_
-		File protector name should be written @b ONLY with capital characters.
-		'_' symbol should be used to split the words in file protector name.
-		Example:
-		@code{.c}
-			#ifndef _PF_CORE_H_
-			#define _PF_CORE_H_
-			#endif	/* !_PF_CORE_H_ */
-		@endcode
-		After @c endif statement set '!' character before file protector name. It show to which
-		@c define @c endif belongs.
-	@section PfVarNameSec Variable naming conventions
-		All variables should be named using camel style.
-		If variable has local visibility (or function parameter) then 1 word of the variable should
-		be named with small letter and all other world shold be started with capital letters.
-		In case of global or static variable [prefix] should be used before variable name.
-		Variable name structure: [prefix][variable name] ('g_' for global variable and 's_' for
-		static variable). Examples: \b 'currentProcessContext' for local variable,
-		\b 'g_currentProcessContext' for global variable and \b 's_currentProcessContext' for static
-		variable.
-	@section PfFuncNameSec Function naming conventions
-		Function name structure: [function type][return type][prefix][function name]([param list]),
-		where [function type]
-		Function declaration:
-		@code{.c}
-			PFAPI PF_STATUS PfOutputDebugString(PfDebuggerContext* const context, char* str);
-		@endcode
-		Function definition:
-		@code{.c}
-			PFAPI PF_STATUS PfOutputDebugString(PfDebuggerContext* const context, char* str)
-			{
-				PF_STATUS result = PF_STATUS_OK;
 
-				/*
-				* TODO: Implement context verificaiton
-				*/
+	@section PfProgramLayoutRules      1. Program layout rules
+		@subsection PfSourceFileStruct 	  1.1 Source file structure
+			@subsubsection PfCHeaderStruct 	  1.1.1 C header file structure
+				Header file (*.h) has the same structure as the template below:
+				@code{.c}
+					// Heading comments
+					#ifndef HEADER_FILE_ID
+					#define HEADER_FILE_ID
+					...
+					#endif  /* !HEADER_FILE_ID */
+				@endcode
 
-				printf(str);
+			@subsubsection PfCImplStruct 	  1.1.2 C implementation file structure
+				For C language, Implementation the (*.c) has same structure as the template below:
+				@code{.c}
+					// Heading comments
+					#include <header_file.h>
+					#include <stdio.h>
+					#include <stdlib.h>
+					// Global variable definitions
+					// Imported variable declarations
+					// Imported function declarations
+					// Local #defines
+					// Local constant definitions
+					// Local typedefs
+					// Local function declarations
+					// Function definitions
+				@endcode
 
-				return result;
-			}
-		@endcode
-	@section PfCommentSec Comments format
-		For the PF used the following comments convention.
+			@subsubsection PfCppHeaderStruct  1.1.3 C++ header file structure
+				In case of C++ language, header file (*.h) has same structure as given in example
+				below. As a Rule, Data member/Member function are not defined in header file.
+				However, there is exception in case of template class and inline function.
+				@code{.cpp}
+					// Heading comments(Project Comment, File Comment)
+					#ifndef _HEADER_FILE_ID_
+					#define _HEADER_FILE_ID_
+					#include <stdio.h>
+					#define SAMPLE_DEFINE_CONSTANT 5
+					// enums
+					// typedefs
+					// constant definitions
+					// forward declarations
+					// class declarations
+    					// public
+    					// protected
+    					// private
+						// Inline/template implementation includes
+					#endif /* !_HEADER_FILE_ID_ */
+				@endcode
+			@subsubsection PfCppimplStruct    1.1.4 C++ implementation file structure
+				In case of C++ language, Implementation file (*.cpp file) has same structure as
+				shown in example.
+				@code{.cpp}
+					// Heading comments(Project Comment, File Comment)
+					// #includes
+					// Global variable definitions 
+					// When using // C code
+					// Imported variable declarations 
+					// When using after connecting with // C code
+					// Imported function declarations 
+					// When using after connecting with // C code
+					// Local #defines                          
+					// It is recommended to define Constant which used const than that of #define
+					// text in // C++
+					// Local constant definitions
+					// Local function prototypes         
+					// When using // C style code
+					// Class definition
+				@endcode
+
+			\b Global \b Variable. Describes the global variables provided in this file. All global
+			variables \b MUST be initialized. Describe variables and functions declared as extern.
+			It is better to specify the location (file name) of the variable or function declared as
+			extern.\n
+
+			\b Function \b Definition. Describes about the function to be implemented in this file.
+			As a default, it is recommended to define using breath-first method, that is defining
+			from upper part of the function hierarchy to lower part of the hierarchy, however, as
+			per the requirement, alphabetic order or depth-first mode can be also used.\n
+			\b Heading \b Comments. In heading comments Draft the information (File name, content,
+			drafter, date, modified content etc) for header and implementation file.\n
+			\b Header \b File \b ID. Header file ID is used to prevent inclusion of header file for
+			many times. HEADER_FILE_ID has _[filename]_H_ format. In case of \c core.h,
+			it becomes "_CORE_H_".\n
+			\b Includes. Do not create the header file(s) named as library which is generally
+			used.\n
+			\b Defines. Defines macro.\n
+			\b Enumeration. Defines enumeration types.\n
+			\b Typedef. Declares user definition form as \c typedef.\n
+			\b Constant \b Definitions. Declares constant. However, it is recomended to declare the
+			constant inside related class.\n
+			\b Variable \b Declaration. Declares external variable.\n
+			\b Forward \b Declaration. If class  B is included inside class A as a pointer, and  in
+			the declaration of class A in the header file, no method/variable of class B is
+			accessed, then, even if only forward declaration is done in front of class A (forward
+			declaration/ex: \c Class \c B;) without including Declaration of class B, the class A can
+			be compiled to/as target file. In case of using Include, Compile time increases because
+			of dependency between header files and processing of all the header files included.
+			Accordingly, when given conditions are satisfied, corresponding Class should be
+			declared in forward declarations section.\n
+			\b Class \b Declarations. Declares class. Method/Member variable inside class sequenced
+			in \c public, \c protected, \c private order.\n
+
+			\b Inline/Template \b Implementation \b Includes. When inline, template implementation
+			is not included in in Class declaration and are stored in a separate file, then,
+			corresponding files are included here.\n
+			\b Class \b Definition. Class methods are defined in this file. The class methods are 
+			defined in the order of their declarations in the class declaration(in the header file).
+
+		@subsection PfClassStructure   	  1.2 Class structure
+			@subsubsection PfClassDeclaration	1.2.1 Class declaration
+				Method given in following example is followed while declaring a new class:
+				@code{.cpp}
+					// heading comments
+					#ifndef _EXAMPLE_NAME_H_
+					#define _EXAMPLE_NAME_H_
+
+					// system includes
+					// project includes
+					// local includes
+					// forward references
+
+					class ExampleName
+					{
+						public:	// lifecycle
+							ExampleName(); // default constructor
+							ExampleName(const ExampleName&); // copy constructor
+							~ExampleName(); // destructor
+							// operators
+							ExampleName& operator=(ExampleName&); // asignment operator
+							// operations
+							// access
+							// inquiry
+						protected:
+						private:					
+					};
+
+					// inline methods
+					// external references
+
+					#endif /* !_EXAMPLE_NAME_H_ */
+				@endcode
+			@subsubsection PfClassDefinition	1.2.2 Class definition
+				Method given in following example is followed while defining a new class:
+				@code{.cpp}
+					#include "ExampleName.h"  // class implemented
+					
+					/**
+					********************************************************************************
+					*
+					********************************************************************************
+					*/
+					ExampleName::ExampleName()
+					{
+						// TODO: To implement
+					}
+					
+					/**
+					********************************************************************************
+					*
+					********************************************************************************
+					*/
+					ExampleName::ExampleName(const ExampleName&)
+					{
+						// TODO: To implement
+					}
+					
+					/**
+					********************************************************************************
+					*
+					********************************************************************************
+					*/
+					ExampleName::~ExampleName()
+					{
+						// TODO: To implement
+					}
+
+					/**
+					********************************************************************************
+					*
+					********************************************************************************
+					*/
+					ExampleName& ExampleName::operator=(ExampleName&)
+					{
+					   return *this;
+					}
+
+					// operations
+					// access
+					// inquiry
+
+					// protected
+					// private
+  				@endcode
+  			@subsubsection PfCOrderDefinition	1.2.2 Class definition order
+  				Class definition is done in public, protected, private section order.
+  				@code{.cpp}
+  					#ifndef _EXAMPLE_NAME_H_
+					#define _EXAMPLE_NAME_H_
+					// system includes
+					// project includes
+					// local includes
+					// forward references
+
+					#ifdef _TYPE_H_
+					#include <math.h>
+					#include "inc/myheader.h"
+					#endif /* !_TYPE_H_ */
+
+					#endif /* !_EXAMPLE_NAME_H_ */
+  				@endcode
+  				Class definition example:
+  				@code{.cpp}
+  					class Date
+					{
+     					public:
+           					Date();    // creater
+           					Date(int year)
+     					protected:
+           					void  print();
+     					private:
+           					void draw();
+					};
+  				@endcode
+
+	@section PfNamingConventions       2. Naming conventions
+		@subsection PfFileNamingConv	  2.1 File naming convention
+		@subsection PfFuncNamingConv	  2.2 Function naming convention
+		@subsection PfVarNamingConv	      2.3 Variable/parameter naming convention
+		@subsection PfTypeNamingConv      2.4 Type naming convention
+		@subsection PfConstNamingConv     2.5 Constant naming convention
+		@subsection PfClassNamingConv     2.6 Type naming convention
+
+	@section PfCommentProcessingRules  3. Comment processing rules
+		@subsection PfBlockCommentRule	  3.1 Block comment processing
+		@subsection PfFileCommentRule	  3.2 File comment processing
+		@subsection PfTypeCommentRule	  3.3 Type comment processing
+		@subsection PfAttrCommentRule	  3.4 Attribute comment processing
+		@subsection PfFuncCommentRule	  3.5 Function comment processing
+		@subsection PfElineCommentRule	  3.6 End-line comment processing
+		@subsection PfMacroCommentRule	  3.7 Macro comment processing
+		@subsection PfClassCommentRule	  3.8 Class comment processing
+		@subsection PfNsCommentRule	  	  3.9 Name space comment processing
+
+	@section PfCodeImplementationRules 4. Code implementation rules
+		@subsection PfIndentRule	  	  4.1 Indentation rule
+		@subsection PfSpaceRule		  	  4.2 Spacing rule
+		@subsection PfCondIterRule	  	  4.3 Condition/Iteration implementation rule
+		@subsection PfFuncImplRule	  	  4.4 Function implementation rule
+		@subsection PfVarImplRule	  	  4.5 Variable implementation rule
+		@subsection PfMacroImplRule	  	  4.6 Macro implementation rule
+
+	@section PfExceptionHandlingRules 5. Exception handling rule
+		@subsection PfCondExceptRule	  5.1 Handling Condition/Iteration statement exceptions
 */

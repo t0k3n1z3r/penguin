@@ -56,10 +56,10 @@ typedef enum
 
 /**
 ****************************************************************************************************
-* @struct PfDebugContext
-* @brief Debug context structure is one of the most important things. This structure encapsulate
-*	the logic of the logging, monitoring and debugging process. In release mode debuging option
-*	disabled.
+* @struct 	PfDebugContext
+* @brief 	Debug context structure is one of the most important things. This structure encapsulate
+*			the logic of the logging, monitoring and debugging process. In release mode debuging option
+*			disabled.
 ****************************************************************************************************
 */
 typedef struct
@@ -69,20 +69,32 @@ typedef struct
 
 /**
 ****************************************************************************************************
-* @brief Open and initialize debiging context.
-* @param [in,out] context pointer to the debuging context.
-* @return PF_STATUS_OK on success, PF_STATUS_FAIL otherwise.
+* @brief 	Open and initialize debiging context.
+* @param 	[in,out] context pointer to the debuging context.
+* @return 	PF_STATUS_OK on success, PF_STATUS_FAIL otherwise.
 ****************************************************************************************************
 */
 PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const context);
 
 /**
 ****************************************************************************************************
-* @brief Close and destroy resources of the debugging context.
-* @param [in,out] context pointer to the debuging context.
-* @return PF_STATUS_OK on success, PF_STATUS_FAIL otherwise.
+* @brief 	Close and destroy resources of the debugging context.
+* @param 	[in,out] context pointer to the debuging context.
+* @return 	PF_STATUS_OK on success, PF_STATUS_FAIL otherwise.
 ****************************************************************************************************
 */
 PF_STATUS PFAPI PfCloseDebugContext(PfDebugContext* const context);
+
+/**
+****************************************************************************************************
+* @brief 	Print log message to the output buffer.
+* @param 	[in] debugClass module tag
+* @param 	[in] debugLevel message level
+* @param 	[in] format format string
+* @return 	PF_STATUS_OK on success, PF_STATUS_FAIL otherwise.
+****************************************************************************************************
+*/
+PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBUG_LEVEL debugLevel,
+	const char* const format, ...);
 
 #endif	/* !_PF_DEBUG_H_ */

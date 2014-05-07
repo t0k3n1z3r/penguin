@@ -1043,6 +1043,11 @@
 			a space in the next paragraph. \n
 			Good example:
 			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
 				void PrintFunction(void) 
 				{ 
 					static char temp1 = 0;
@@ -1057,6 +1062,11 @@
 			@endcode
 			Bad example:
 			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
 				void printfunction(void)
 				{
 					static char temp1 = 0;
@@ -1071,10 +1081,427 @@
 			@endcode
 
 		@subsection PfCondIterRule	  	  4.3 Condition/Iteration implementation rule
+			Else part in if-else statement is positioned in a new line. In case of if-else if-else
+			statement, else if part is typed in an independent line. Even if Condition/iteration
+			statement (if, while, for) is single line, ‘{‘ and ‘}’ is used.\n
+			Good example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void Machine(void) 
+				{
+					if (STREQ(reply, “yes”))
+					{
+				        printf( “output  as yes”);
+				    }
+				    else if (STREQ(reply, “no”))
+				    {
+				        printf( “output as no”);
+				    }
+				 
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void machine(void)
+				{
+					if (STREQ(reply, “yes”)) {
+						printf( “output  as yes”);
+				    } else if (STREQ(reply, “no”))
+				    	printf( “output  as no”);
+				}
+			@endcode
+			Decision statement in a Condition/Iteration statement is simplified by using boolean
+			expressions.\n
+			Good example:
+			@code{.c}
+				if (timerId >=0)
+				{
+					gSendOtarWaitTimerId = timerId;
+					AC_PRINT(PRT_MSG, 0, "Set Success)\n“);
+				}
+				else
+				{
+				   AC_PRINT(PRT_MSG, 0, "Set Error)\n“);
+				}
+
+				i = initialI; 
+				while (i <= iMax) 
+				{ 
+				    // TODO: implement
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				for (i = 0; i < (d = (a +b + c)); i++) 
+					x[i] = 0.5*(float)i; /* print x */
+				while (EOF != (c++ = getchar()))
+				{
+				    // TODO: process the character
+				}
+			@endcode
+			A case in a switch statement is indented more than switch and, is positioned in an
+			independent line. NULL statement (‘;’) should be positioned in an independent line and
+			comment "// NULL" should be attached when there is no ‘body’ in the for/while
+			statement.\n
+			Good example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void main (void) 
+				{
+				    switch(month) 
+				    {
+				    	case 1:
+				    	day=31;
+				    	break;
+				    }
+				    while (--day > 0) 
+				    {
+				        ; // NULL
+				    }
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void main (void) 
+				{
+					switch(month) {
+					case 1:
+					day=31;
+					break;
+				    }
+				    while (--day > 0)
+				    {
+				        ;
+				    }
+				}
+			@endcode
+			break/return text is used in all cases in Switch statement except \c default: (comment
+			should be added when break/return text is not used deliberately).\n
+			Good example:
+			@code{.c}
+				switch(j)
+				{
+					case 1:
+					case 2:
+						printf("POINT-1&2");
+						break;
+					case 3:
+						printf("Skip");
+				    	/* fall through */
+				    case 4:
+				    	printf("POINT-4");
+				    	break;
+				    default:
+				    	printf("Default");
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				switch(j)
+				{
+					case 1:
+					case 2:
+						printf("POINT-1&2");
+						break;
+					case 3:
+				    	printf("Skip");
+				    case 4:
+				        printf("POINT-4");
+				        break;
+				    default:
+				        printf("Default");
+				}
+			@endcode
+			{ } \b MUST be used always for Do-while statement.\n
+			Good example:
+			@code{.c}
+				do
+				{
+					a++;
+					printf("%d\n",a);
+			    }
+			    while(a < 5);
+			@endcode
+			Bad example:
+			@code{.c}
+				do
+		        	a++;
+		        	printf("%d\n",a);
+		    	while(a < 5);
+			@endcode
+
 		@subsection PfFuncImplRule	  	  4.4 Function implementation rule
+			Return type of function should always be specified. function without return value is
+			listed as \c void. Left parenthesis is always used attached with the function name.\n
+			Good example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void Factorial(int number) 
+				{
+				    int intermediateResult = 1; 
+				    for(int factor = 2; factor <= number; factor++)
+				    {
+				        intermediateResult = ntermediateResult * factor;
+				    }
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				Factorial (int number)
+				{
+					int intermediateResult = 1; 
+					for(int factor = 2; factor <= number; factor++)
+				    {
+				        intermediateResult = ntermediateResult * factor;
+				    }
+				}
+			@endcode
+			Declare the function parameter not only type but also name together. Void is specified
+			when there is no Input parameter. However, Creator and Destructor of C++ are
+			exception.\n
+			Good example:
+			@code{.c}
+				void printSectionA(int x, int y);
+
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void printSectionB(void)
+				{
+					int i, j;
+					printf("Enter Alp : ");
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				void printSectionA(int, int);
+
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void printSectionB()
+				{
+					int i, j;
+					printf("Enter Alp : ");
+				}
+			@endcode
+
 		@subsection PfVarImplRule	  	  4.5 Variable implementation rule
+			Only one variable is declared in one line while declaring Global variable. Many
+			variables can be declared depending on the requirement while declaring Local variable or
+			auto variable but, this is limited to the related variables. Only one variable is
+			declared in one line while declaring many Pointer variables.\n
+			Good example:
+			@code{.c}
+				const  int  MAX_POOL_LEN = 128;
+				static int var = 1;
+				extern int caWords[ATOZ];
+
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void func(void)
+				{
+					int array[MAX_POOL_LEN];
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				static int var = 1; extern int caWords[ATOZ];
+
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void func(void)
+				{
+					int array[];
+				}
+			@endcode
+			Enter the Extern keyword when External declaration has to be done. Size of the sequence
+			must be specified while declaring the sequence. All declared variables must be used.\n
+			Good example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void main(void) 
+				{
+					char* pChar = 0;
+					int* pInt = 0;
+					printf("%u , %u \n", pChar, pInt );
+					pChar++;
+					pInt++;
+					printf("%u , %u \n", pChar, pInt );
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void main(void)
+				{
+					char  *pChar = 0, int  *pInt = 0;
+					int unused;
+					printf("%u , %u \n", pChar, pInt );
+					pChar++;
+					pInt++;
+					printf("%u , %u \n", pChar, pInt );
+				}
+			@endcode
+
 		@subsection PfMacroImplRule	  	  4.6 Macro implementation rule
+			Put all the "#"" signs of Macro which defines \c define in the first space. All
+			expressions or parameter of expressions which configure Macro are put together by
+			using (). While using a defined Macro, it must be used in a statement form.
+			That is, ";"" is placed at the end of the Macro.\n
+			Good example:
+			@code{.c}
+				#define PRODUCT(a, b) ((a)*(b))
+				#define MULTI_3(x)  ((x) * (x)) //OK
+				#define BORK() (zork())
+				#define NODE() (nork())
+
+				if (isRootNode)
+					ROOT();
+				else
+					NODE();
+			@endcode
+			Bad example:
+			@code{.c}
+				#define product(a, b) (a)*(b)
+				#define MULTI_3(x)  (x * (x)) //Violation
+				#define ROOT() (zork())
+				#define NODE() (nork())
+
+				if (isRootNode) 
+				    ROOT()
+				else
+				    NODE()
+			@endcode
+			An execution statement which configures a Macro is put together by using  ‘do {}
+			while (0)’.\n
+			Good example:
+			@code{.c}
+				#define PRODUCT(a, b) ((a)*(b))
+				#define MULTI_3(x)  (x * (x)) //Violation
+				#define SP3() \
+				    do\
+				    {\
+				        if (b) { int x; av = f(&x); bv += x; }
+				    }\
+				    while (0)
+				#define BORK() (zork())
+				if (x == 3)
+				SP3();
+				else
+				BORK();
+			@endcode
+			Bad example:
+			@code{.c}
+				#define product(a, b) (a)*(b)
+				#define MULTI_3(x)  ((x) * (x)) //OK
+				#define SP3() \
+				    if (b) { int x; av = f(&x); bv += x; }
+				#define BORK() (zork())
+				if (x == 3)
+				SP3();
+				else
+				BORK();
+			@endcode
 
 	@section PfExceptionHandlingRules 5. Exception handling rule
 		@subsection PfCondExceptRule	  5.1 Handling Condition/Iteration statement exceptions
+			Else should always be there in if-else statement. Else should be there in
+			if-else if-else statement as well. Null statement(';') should be positioned in
+			independent line and comment // NULL should be put when there is no ‘body’ in an
+			if-else statement.\n
+			Good example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void Machine(void) 
+				{
+					if (STREQ(reply, “yes”))
+					{
+						printf( “Print yes”);
+					}
+					else
+					{
+						; // NULL
+				    }
+				}
+			@endcode
+			Bad example:
+			@code{.c}
+				/*
+				************************************************************************************
+				*
+				************************************************************************************
+				*/
+				void machine(void) 
+				{
+					if (STREQ(reply, “yes”))
+					{
+						printf( “Print yes”);
+					}
+				}
+			@endcode
+			Default statement must be there in a Switch statement.\n
+			Good example:
+			@code{.c}
+				switch(j)
+				{
+					case 1:
+					case 2:
+						printf("POINT-1&2");
+						break;
+					default:
+						printf("Default");
+				}
+			@endcode
+	@section PfAppendix 6. Source code quality improvement
+		
 */

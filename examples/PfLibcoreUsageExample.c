@@ -1,11 +1,11 @@
 /**
 ****************************************************************************************************
 * @file 	PfLibcoreUsageExample.c
-* @example	PfLibcoreUsageExample.c
 * @brief 	Penguin Framework [PF] libcore usage example
 * @author	Maksym Koshel (maks.koshel@gmail.com)
 * @date 	Apr 23, 2014
 * @copyright Maksym Koshel (c) 2014. All rights reserved.
+* @example	PfLibcoreUsageExample.c
 ****************************************************************************************************
 */
 

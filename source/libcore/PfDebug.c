@@ -56,7 +56,7 @@ static void PfOutputDebugString(PfDebugContext* const pContext, const char* cons
 ****************************************************************************************************
 * @brief	Construct message header to be printed (Time, debug class and debug level).
 * @param	[out] pBuffer pointer to the output buffer.
-* @param 	[in] bufferSize size in bytes of the output buffer
+* @param 	[in] bufferSize size in bytes of the output buffer.
 * @return 	number for written bytes that was started from pBuffer.
 ****************************************************************************************************
 */
@@ -68,10 +68,17 @@ static size_t PfConstructMessageHeader(char* const pBuffer, size_t bufferSize,
 *
 ****************************************************************************************************
 */
-PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const context)
+PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const pContext)
 {
 	PF_STATUS result = PF_STATUS_NOT_IMPLEMENTED;
-	
+	if (NULL != pContext && pContext->header.size == sizeof(PfDebugContext))
+	{
+		s_debugContextArray[pContext->debugClass] = *pContext;
+	}
+	else
+	{
+		printf("Debug context is invalid!");
+	}
 	return result;
 }
 

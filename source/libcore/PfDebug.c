@@ -10,7 +10,9 @@
 */
 
 #include "PfDebug.h"
+#include "PfTime.h"
 #include <stdio.h>
+#include <stdarg.h>
 
 /**
 ****************************************************************************************************
@@ -68,7 +70,24 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 	const char* const format, ...)
 {
 	PF_STATUS result = PF_STATUS_OK;
-	PfOutputDebugString(NULL, format);
+
+	/**
+	* @brief	Allocation of 512 bytes on stack is very bad for kernel device drivers since it has
+	*			single stack address space.
+	* @todo: 	To change the memory for this buffer. 
+	*/
+	char outputBuffer[512] = {0,};
+
+
+	va_list args;
+	va_start(format, args);
+
+	// Start constructing the output message
+
+
+	PfOutputDebugString(NULL, outputBuffer);
+
+	va_end(args);
 	return result;
 }
 
@@ -83,7 +102,6 @@ void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMess
 	{
 		if (PF_CONTEXT_STATE_INITIALIZED == pContext->header.state)
 		{
-			char outputBuffer[512] = {0,};
 			printf("[%p]: %s", pContext, pMessage);
 		}
 		else

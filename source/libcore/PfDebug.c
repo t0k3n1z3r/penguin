@@ -28,6 +28,20 @@ static const char* s_debugLevelAliases[] = {"ERR","WARN", "INFO"};
 */
 static const char* s_debugClassAliases[] = {"????", "CORE", "PRTL", "TRST", "PENG"};
 
+static PfDebugContext s_debugContextArray[5] = 
+{
+	{
+		.header = 
+		{
+			.size = sizeof(PfDebugContext),
+			.state = PF_CONTEXT_STATE_INITIALIZED,
+			.type = 0
+		},
+		.debugClass = PF_DEBUG_CLASS_UNDEFINED,
+		.debugLevel = PF_DEBUG_LEVEL_MAX
+	},
+};
+
 /**
 ****************************************************************************************************
 * @brief	Print debug prepared string to the output buffer using PfDebugContext.
@@ -57,7 +71,7 @@ static size_t PfConstructMessageHeader(char* const pBuffer, size_t bufferSize,
 PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const context)
 {
 	PF_STATUS result = PF_STATUS_NOT_IMPLEMENTED;
-
+	
 	return result;
 }
 
@@ -104,7 +118,7 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 	lengthOfMessage = vsnprintf(pCurrentPosition, bufferLeft, format, args);
 	va_end(args);
 
-	PfOutputDebugString(NULL, outputBuffer);
+	PfOutputDebugString(&s_debugContextArray[debugClass], outputBuffer);
 	return result;
 }
 

@@ -2,6 +2,10 @@
     "folders":
     [
         {
+            "path": "../../build",
+            "name": "Build"
+        },
+        {
             "path": "../../doc",
             "name": "Documentation"
         },

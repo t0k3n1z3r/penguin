@@ -26,7 +26,7 @@ static const char* s_debugLevelAliases[] = {"ERR","WARN", "INFO"};
 * @brief	This array is used to map debug class to corresponding string for output
 ****************************************************************************************************
 */
-static const char* s_debugClassAliases[] = {"????", "CORE", "TRST", "PRTL", "PENG"};
+static const char* s_debugClassAliases[] = {"????", "CORE", "PRTL", "TRST", "PENG"};
 
 /**
 ****************************************************************************************************
@@ -37,7 +37,8 @@ static const char* s_debugClassAliases[] = {"????", "CORE", "TRST", "PRTL", "PEN
 ****************************************************************************************************
 */
 void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage);
-/**
+
+/*
 ****************************************************************************************************
 *
 ****************************************************************************************************
@@ -49,7 +50,7 @@ PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const context)
 	return result;
 }
 
-/**
+/*
 ****************************************************************************************************
 *
 ****************************************************************************************************
@@ -61,7 +62,7 @@ PF_STATUS PFAPI PfCloseDebugContext(PfDebugContext* const context)
 	return result;
 }
 
-/**
+/*
 ****************************************************************************************************
 *
 ****************************************************************************************************
@@ -77,21 +78,41 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 	* @todo: 	To change the memory for this buffer. 
 	*/
 	char outputBuffer[512] = {0,};
+	char* pCurrentPosition = outputBuffer;
+	size_t bufferLeft = sizeof(outputBuffer);
 
+	// Put the time of the event into output message 
+	PfTime currentTime = PfGetTimeStructure(PfGetSystemTimeUsec());
+	Udword lengthOfMessage = snprintf(pCurrentPosition, bufferLeft, "[%.2d:%.2d:%.2d:%.3d]",
+		currentTime.hours, currentTime.minutes, currentTime.sec, currentTime.msec);
 
+	// Calculate actual buffer size and new position
+	bufferLeft -= lengthOfMessage;
+	pCurrentPosition += lengthOfMessage;
+
+	// Put debug class and debug level into
+	lengthOfMessage = snprintf(pCurrentPosition, bufferLeft, "[%s][%s]: ",
+		s_debugClassAliases[debugClass], s_debugLevelAliases[debugLevel]);
+
+	// Calculate actual buffer size and new position
+	bufferLeft -= lengthOfMessage;
+	pCurrentPosition += lengthOfMessage;
+
+	// Use std API to parse the function arguments
 	va_list args;
-	va_start(format, args);
-
-	// Start constructing the output message
-
-
-	PfOutputDebugString(NULL, outputBuffer);
-
+	va_start(args, format);
+	lengthOfMessage = vsnprintf(pCurrentPosition, bufferLeft, format, args);
 	va_end(args);
+
+	PfDebugContext debugContext;
+	debugContext.header.size = sizeof(PfDebugContext);
+	debugContext.header.state = PF_CONTEXT_STATE_INITIALIZED;
+
+	PfOutputDebugString(&debugContext, outputBuffer);
 	return result;
 }
 
-/**
+/*
 ****************************************************************************************************
 *
 ****************************************************************************************************
@@ -102,7 +123,7 @@ void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMess
 	{
 		if (PF_CONTEXT_STATE_INITIALIZED == pContext->header.state)
 		{
-			printf("[%p]: %s", pContext, pMessage);
+			printf("%s\n", pMessage);
 		}
 		else
 		{

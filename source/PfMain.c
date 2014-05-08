@@ -20,6 +20,6 @@
 */
 int main(int argc, char* argv[])
 {
-	PF_LOG_E(PF_DEBUG_CLASS_CORE, "Hello from penguin module\n");
+	PF_LOG_I(PF_DEBUG_CLASS_PENGUIN, "Hello from penguin module");
 	return 0;
 }

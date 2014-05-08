@@ -20,6 +20,16 @@
 */
 int main(int argc, char* argv[])
 {
+	PF_STATUS result = PF_STATUS_FAIL;
+	PfDebugContext debugContext;
+
+	debugContext.header.size = sizeof(PfDebugContext);
+	debugContext.debugClass = PF_DEBUG_CLASS_PENGUIN;
+	debugContext.debugLevel = PF_DEBUG_LEVEL_MAX;
+	debugContext.header.state = PF_CONTEXT_STATE_INITIALIZED;
+
+	result = PfOpenDebugContext(&debugContext);
 	PF_LOG_I(PF_DEBUG_CLASS_PENGUIN, "Hello from penguin module");
-	return 0;
+	result = PfCloseDebugContext(&debugContext);
+	return result;
 }

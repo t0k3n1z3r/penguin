@@ -36,7 +36,18 @@ static const char* s_debugClassAliases[] = {"????", "CORE", "PRTL", "TRST", "PEN
 * @return 	void
 ****************************************************************************************************
 */
-void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage);
+static void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage);
+
+/**
+****************************************************************************************************
+* @brief	Construct message header to be printed (Time, debug class and debug level).
+* @param	[out] pBuffer pointer to the output buffer.
+* @param 	[in] bufferSize size in bytes of the output buffer
+* @return 	number for written bytes that was started from pBuffer.
+****************************************************************************************************
+*/
+static size_t PfConstructMessageHeader(char* const pBuffer, size_t bufferSize,
+	const PF_DEBUG_CLASS debugClass, const PF_DEBUG_LEVEL debugLevel);
 
 /*
 ****************************************************************************************************
@@ -81,20 +92,9 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 	char* pCurrentPosition = outputBuffer;
 	size_t bufferLeft = sizeof(outputBuffer);
 
-	// Put the time of the event into output message 
-	PfTime currentTime = PfGetTimeStructure(PfGetSystemTimeUsec());
-	Udword lengthOfMessage = snprintf(pCurrentPosition, bufferLeft, "[%.2d:%.2d:%.2d:%.3d]",
-		currentTime.hours, currentTime.minutes, currentTime.sec, currentTime.msec);
+	size_t lengthOfMessage = PfConstructMessageHeader(pCurrentPosition, bufferLeft,
+		debugClass, debugLevel);
 
-	// Calculate actual buffer size and new position
-	bufferLeft -= lengthOfMessage;
-	pCurrentPosition += lengthOfMessage;
-
-	// Put debug class and debug level into
-	lengthOfMessage = snprintf(pCurrentPosition, bufferLeft, "[%s][%s]: ",
-		s_debugClassAliases[debugClass], s_debugLevelAliases[debugLevel]);
-
-	// Calculate actual buffer size and new position
 	bufferLeft -= lengthOfMessage;
 	pCurrentPosition += lengthOfMessage;
 
@@ -104,11 +104,7 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 	lengthOfMessage = vsnprintf(pCurrentPosition, bufferLeft, format, args);
 	va_end(args);
 
-	PfDebugContext debugContext;
-	debugContext.header.size = sizeof(PfDebugContext);
-	debugContext.header.state = PF_CONTEXT_STATE_INITIALIZED;
-
-	PfOutputDebugString(&debugContext, outputBuffer);
+	PfOutputDebugString(NULL, outputBuffer);
 	return result;
 }
 
@@ -117,7 +113,7 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 *
 ****************************************************************************************************
 */
-void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage)
+static void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage)
 {
 	if (NULL != pContext && pContext->header.size == sizeof(PfDebugContext))
 	{
@@ -134,4 +130,37 @@ void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMess
 	{
 		printf("Debug context for this module is %p\n", pContext);
 	}
+}
+
+/*
+****************************************************************************************************
+*
+****************************************************************************************************
+*/
+static size_t PfConstructMessageHeader(char* const pBuffer, size_t bufferSize,
+	const PF_DEBUG_CLASS debugClass, const PF_DEBUG_LEVEL debugLevel)
+{
+	size_t result = 0;
+
+	size_t writtenBytes = 0;
+	char* pCurrentBufferPosition = pBuffer;
+	size_t availableSpaceInBuffer = bufferSize;
+
+	// Put the time of the event into output message 
+	PfTime currentTime = PfGetTimeStructure(PfGetSystemTimeUsec());
+	writtenBytes = snprintf(pCurrentBufferPosition, availableSpaceInBuffer, "[%.2d:%.2d:%.2d:%.3d]",
+		currentTime.hours, currentTime.minutes, currentTime.sec, currentTime.msec);
+
+	// Calculate actual buffer size and new position
+	availableSpaceInBuffer -= writtenBytes;
+	pCurrentBufferPosition += writtenBytes;
+
+	// Put debug class and debug level into
+	writtenBytes = snprintf(pCurrentBufferPosition, availableSpaceInBuffer, "[%s][%s]: ",
+		s_debugClassAliases[debugClass], s_debugLevelAliases[debugLevel]);
+
+	availableSpaceInBuffer -= writtenBytes;
+	result = bufferSize - availableSpaceInBuffer;
+
+	return result;
 }

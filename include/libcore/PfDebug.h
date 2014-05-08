@@ -69,6 +69,8 @@ typedef enum
 typedef struct
 {
 	PfHeader header; ///< Debug context header
+	PF_DEBUG_CLASS debugClass; ///< Debug class (module)
+	PF_DEBUG_LEVEL debugLevel; ///< Debug level
 } PfDebugContext;
 
 /**

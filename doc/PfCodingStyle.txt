@@ -445,7 +445,7 @@
 				to Data member of class is of Boolean type.
 
 		@subsection PfVarNamingConv	      2.3 Variable/parameter naming convention
-			@subsubsection PfVPName			  2.3.1 General variable/parameter naming rule
+			@subsubsection PfVPGName			  2.3.1 General variable/parameter naming rule
 				Variable name and Parameter name of a function starts with small letter.
 
 			@subsubsection PfVPName			  2.3.2 Variable/parameter name length
@@ -462,7 +462,7 @@
 					Uint16 receiveTID; // 16 bit unsigned int
 				@endcode
 
-			@subsubsection PfVPMName		  2.3.4 Variable/parameter abbreviation
+			@subsubsection PfVPMAName		  2.3.4 Variable/parameter abbreviation
 				It is a rule to not use abbreviation for Variable/Parameter name of a function,
 				however, Acronyms commonly used in Industry are used by writing it all in Capital
 				letters.

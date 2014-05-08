@@ -72,6 +72,11 @@ PF_STATUS PFAPI PfPrintLogMessage(const PF_DEBUG_CLASS debugClass, const PF_DEBU
 	return result;
 }
 
+/**
+****************************************************************************************************
+*
+****************************************************************************************************
+*/
 void PfOutputDebugString(PfDebugContext* const pContext, const char* const pMessage)
 {
 	if (NULL != pContext && pContext->header.size == sizeof(PfDebugContext))

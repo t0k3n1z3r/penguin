@@ -14,4 +14,6 @@
 
 #include "PfDBusContext.h"
 
+void PFAPI CreateConnection(void);
+
 #endif	/* !_PF_TRANSPORT_H_ */

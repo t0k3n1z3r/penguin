@@ -57,6 +57,7 @@ static void PfOutputDebugString(PfDebugContext* const pContext, const char* cons
 * @brief	Construct message header to be printed (Time, debug class and debug level).
 * @param	[out] pBuffer pointer to the output buffer.
 * @param 	[in] bufferSize size in bytes of the output buffer.
+* @param 	[in] 
 * @return 	number for written bytes that was started from pBuffer.
 ****************************************************************************************************
 */

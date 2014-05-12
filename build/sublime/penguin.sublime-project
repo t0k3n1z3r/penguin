@@ -2,28 +2,8 @@
     "folders":
     [
         {
-            "path": "../../build",
-            "name": "Build"
-        },
-        {
-            "path": "../../doc",
-            "name": "Documentation"
-        },
-        {
-            "path": "../../include",
-            "name": "Includes"
-        },
-        {
-            "path": "../../source",
-            "name": "Sources"
-        },
-        {
-            "path": "../../test",
-            "name": "Tests"
-        },
-        {
-            "path": "../../examples",
-            "name": "Example"
+            "path": "../../",
+            "name": "Penguin Framework"
         }
     ],
     "settings":

@@ -1,7 +1,7 @@
 /**
 ****************************************************************************************************
-* @file 	PfLibprotocolUsageExample.c
 * @example	PfLibprotocolUsageExample.c
+* @file 	PfLibprotocolUsageExample.c
 * @brief 	Penguin Framework [PF] libprotocol usage example
 * @author	Maksym Koshel (maks.koshel@gmail.com)
 * @date 	Apr 23, 2014

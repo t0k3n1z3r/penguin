@@ -21,9 +21,10 @@
 */
 typedef enum
 {
-	PF_STATUS_OK = 0, ///< Operation was successfull
-	PF_STATUS_NOT_IMPLEMENTED = 1, ///< Operation is not implemented
-	PF_STATUS_FAIL = -(1) ///< Operation was failed
+	PF_STATUS_OK = 0, 				///< Operation was successfull
+	PF_STATUS_NOT_IMPLEMENTED = 1, 	///< Operation is not implemented
+	PF_STATUS_BAD_ARG = 2, 			///< Bad input arguments to the function
+	PF_STATUS_FAIL = -(1) 			///< Operation was failed
 } PF_STATUS;
 
 #endif	/* !_PF_STATUS_H_ */

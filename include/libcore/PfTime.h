@@ -23,12 +23,12 @@
 */
 typedef struct
 {
-    Udword	days; ///< Days
-    Ubyte	hours; ///< Hours
-    Ubyte	minutes; ///< Minutes
-    Ubyte	sec; ///< Seconds
-    Udword	msec; ///< Miliseconds
-    Udword	usec; ///< Microseconds
+    Udword	days; 		///< Days
+    Ubyte	hours; 		///< Hours
+    Ubyte	minutes; 	///< Minutes
+    Ubyte	sec; 		///< Seconds
+    Udword	msec; 		///< Miliseconds
+    Udword	usec; 		///< Microseconds
 } PfTime;
 
 /**

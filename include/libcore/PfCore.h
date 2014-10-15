@@ -12,6 +12,9 @@
 #ifndef _PF_CORE_H_
 #define _PF_CORE_H_
 
+/**
+* @note PfTypes and PfStatus included in hte PfDebug.h
+*/
 #include "PfDebug.h"
 #include "PfHeader.h"
 

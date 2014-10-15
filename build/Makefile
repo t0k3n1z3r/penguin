@@ -15,7 +15,7 @@ libtransport:
 	$(call w_print, Building libtransport)
 
 penguin:
-	gcc -o penguin ../source/PfMain.c ../source/libcore/PfDebug.c ../source/libcore/PfTime.c -I../include -I../include/libcore
+	gcc -o penguin ../source/PfMain.c ../source/libcore/PfDebug.c ../source/libcore/PfTime.c -I../include -I../include/libcore -lrt -DPF_DEBUG_CLASS_DEFAULT=PF_DEBUG_CLASS_PENGUIN
 
 clean:
 	rm -rf ../. *.o penguin

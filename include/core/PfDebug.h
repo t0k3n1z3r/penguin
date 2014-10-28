@@ -35,6 +35,7 @@ typedef enum
 	PF_DEBUG_CLASS_TRANSPORT 	= 3, ///< libtransport class
 	PF_DEBUG_CLASS_PENGUIN		= 4, ///< Main application
 	PF_DEBUG_CLASS_MAX 			= PF_DEBUG_CLASS_PENGUIN
+	
 } PF_DEBUG_CLASS;
 
 /**
@@ -55,7 +56,27 @@ typedef enum
     PF_DEBUG_LEVEL_WARNING 		= 1, ///< Debug level WARNING
     PF_DEBUG_LEVEL_INFO 		= 2, ///< Debug level INFORMATION
     PF_DEBUG_LEVEL_MAX 			= PF_DEBUG_LEVEL_INFO
+
 } PF_DEBUG_LEVEL;
+
+/**
+****************************************************************************************************
+* @enum 	PF_DEBUG_COLOR
+* @brief 	This enum defines color number may be used by the log system.
+****************************************************************************************************
+*/
+typedef enum
+{
+	PF_DEBUG_COLOR_BLACK 		= 30, ///< Black color number
+	PF_DEBUG_COLOR_RED 			= 31, ///< Red color number
+	PF_DEBUG_COLOR_GREEN 		= 32, ///< Green color number
+	PF_DEBUG_COLOR_YELLOW 		= 33, ///< Yellow color number
+	PF_DEBUG_COLOR_BLUE 		= 34, ///< Blue color number
+	PF_DEBUG_COLOR_MAGENTA 		= 35, ///< Magenta color number
+	PF_DEBUG_COLOR_CYAN 		= 36, ///< Cyan color number
+	PF_DEBUG_COLOR_WHITE 		= 37  ///< White color number
+
+} PF_DEBUG_COLOR;
 
 /**
 ****************************************************************************************************
@@ -68,9 +89,21 @@ typedef enum
 */
 typedef struct
 {
-	PfHeader header; ///< Debug context header
-	PF_DEBUG_CLASS debugClass; ///< Debug class (module)
-	PF_DEBUG_LEVEL debugLevel; ///< Debug level
+	/**
+	* @brief 	Header structure of the debug context.
+	*/
+	PfHeader header;
+
+	/**
+	* @brief 	Debug class to be selected for output message using debug context structure.
+	*/
+	PF_DEBUG_CLASS debugClass;
+
+	/**
+	* @brief 	Debug level to be selected and filtered message using debug context structure.
+	*/
+	PF_DEBUG_LEVEL debugLevel;
+
 } PfDebugContext;
 
 /**
@@ -96,38 +129,19 @@ PF_STATUS PFAPI PfCloseDebugContext(PfDebugContext* const context);
 /**
 ****************************************************************************************************
 * @brief 	Print log message to the output buffer.
-* @ingroup	PfCore
-* @param 	[in] debugClass module tag
-* @param 	[in] debugLevel message level
-* @param 	[in] format format string
-* @return 	PF_STATUS_OK on success, PF_STATUS_FAIL otherwise.
+* @ingroup 	PfCore
+* @param 	[in] pFunctionName Pointer to the string with function name where message will be
+*			printed.
+* @param 	[in] lineNumber Line number of the function called.
+* @param 	[in] debugClass Debug class related to the message going to be printed.
+* @param 	[in] debugLevel Debug level related to the message going to be printed.
+* @param 	[in] pFormatMessage Pointer to the format string.
+* @param 	[in] ... Arguments will be passed to message construction routines.
+* @return 	SF_STATUS_OK on success, SF_STATUS_FAIL otherwise.
 ****************************************************************************************************
 */
-PF_STATUS PFAPI PfPrintLogMessage(const char* const pMessage);
-
-/**
-****************************************************************************************************
-* @brief 	Interpret debug class to string
-* @param 	[in] moduleClass Module debug class
-* @return 	const C-style string with current module name
-****************************************************************************************************
-*/
-const char* PfConvertDebugClassToString(PF_DEBUG_CLASS moduleClass);
-
-/**
-****************************************************************************************************
-* @brief 	Convert time to C string for log message
-* @return 	const C-style string with time after application was started
-****************************************************************************************************
-*/
-const char* PfConvertTimeToString(void);
-
-/**
-****************************************************************************************************
-*
-****************************************************************************************************
-*/
-const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel);
+PF_STATUS PFAPI PfPrintLogMessage(const char* const pFunctionName, const int lineNumber,
+	PF_DEBUG_CLASS debugClass, PF_DEBUG_LEVEL debugLevel, const char* const pFormatMessage, ...);
 
 #ifndef PF_DEBUG_CLASS_DEFAULT
 
@@ -135,36 +149,11 @@ const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel);
 ****************************************************************************************************
 * @def 		PF_DEBUG_CLASS_DEFAULT
 * @brief 	Specifies default module tag
+* @note 	PF_DEBUG_CLASS_DEFAULT designed to be set in the make file
 ****************************************************************************************************
 */
 #define PF_DEBUG_CLASS_DEFAULT PF_DEBUG_CLASS_UNDEFINED
 #endif /* !PF_DEBUG_CLASS_DEFAULT */
-
-#ifndef PF_DEBUG_MESSAGE_SIZE
-/**
-****************************************************************************************************
-* @def 		PF_DEBUG_MESSAGE_SIZE
-* @brief 	Specifies debug message size. This parameter may be passed as external variable from
-*	build system
-****************************************************************************************************
-*/
-#define PF_DEBUG_MESSAGE_SIZE 256
-#endif
-
-#define PF_CONSTRUCT_MESSAGE(func, line, level, colorTag, format, args...) \
-({ \
-	char buffer[PF_DEBUG_MESSAGE_SIZE] = {0}; \
-	int currentPosition = 0; \
-	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition, \
-		colorTag "%s:", PfConvertTimeToString()); \
-	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition, \
-		"[%s]", PfConvertDebugClassToString(PF_DEBUG_CLASS_DEFAULT)); \
-	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition, \
-		"[%s]", PfConvertLevelToString(level)); \
-	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition, \
-		"[%s:%d]" format "\033[0m", func, line, ##args); \
-	buffer; \
-})
 
 /**
 ****************************************************************************************************
@@ -172,8 +161,9 @@ const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel);
 * @param 	[in] debugClass module tag
 ****************************************************************************************************
 */
-#define PF_LOG_I(format, args...) PfPrintLogMessage(PF_CONSTRUCT_MESSAGE(__FUNCTION__, __LINE__, \
-	PF_DEBUG_LEVEL_INFO, "\033[32m", format, ##args))
+#define PF_LOG_I(format, args...) PfPrintLogMessage(__FUNCTION__, __LINE__, \
+													PF_DEBUG_CLASS_DEFAULT, PF_DEBUG_LEVEL_INFO, \
+													format, ##args)
 
 /**
 ****************************************************************************************************
@@ -181,8 +171,9 @@ const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel);
 * @param 	[in] debugClass module tag
 ****************************************************************************************************
 */
-#define PF_LOG_W(format, args...) PfPrintLogMessage(PF_CONSTRUCT_MESSAGE(__FUNCTION__, __LINE__, \
-	PF_DEBUG_LEVEL_WARNING, "\033[33m", format, ##args))
+#define PF_LOG_W(format, args...) PfPrintLogMessage(__FUNCTION__, __LINE__, \
+													PF_DEBUG_CLASS_DEFAULT, PF_DEBUG_LEVEL_WARNING,\
+													format, ##args)
 
 /**
 ****************************************************************************************************
@@ -190,7 +181,8 @@ const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel);
 * @param 	[in] debugClass module tag
 ****************************************************************************************************
 */
-#define PF_LOG_E(format, args...) PfPrintLogMessage(PF_CONSTRUCT_MESSAGE(__FUNCTION__, __LINE__, \
-	PF_DEBUG_LEVEL_ERROR, "\033[31m", format, ##args))
+#define PF_LOG_E(format, args...) PfPrintLogMessage(__FUNCTION__, __LINE__, \
+													PF_DEBUG_CLASS_DEFAULT, PF_DEBUG_LEVEL_ERROR, \
+													format, ##args)
 
 #endif	/* !_PF_DEBUG_H_ */

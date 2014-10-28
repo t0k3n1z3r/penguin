@@ -16,18 +16,6 @@
 
 /**
 ****************************************************************************************************
-* @struct PfDBusControllerContext
-* @brief D-Bus controller context definition
-* @ingroup	PfTransport
-****************************************************************************************************
-*/
-typedef struct
-{
-	PfHeader header; ///< D-Bus controller header
-} PfDBusControllerContext;
-
-/**
-****************************************************************************************************
 * @struct PfDBusNode
 * @brief D-Bus node
 * @ingroup	PfTransport

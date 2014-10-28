@@ -8,7 +8,7 @@
 ****************************************************************************************************
 */
 
-#include "libcore/PfDebug.h"
+#include "core/PfDebug.h"
 
 /**
 ****************************************************************************************************
@@ -21,17 +21,10 @@
 int main(int argc, char* argv[])
 {
 	PF_STATUS result = PF_STATUS_FAIL;
-	PfDebugContext debugContext;
 
-	debugContext.header.size = sizeof(PfDebugContext);
-	debugContext.debugClass = PF_DEBUG_CLASS_PENGUIN;
-	debugContext.debugLevel = PF_DEBUG_LEVEL_MAX;
+	PF_LOG_I("Hello from penguin module");
+	PF_LOG_W("Hello from penguin module");
+	PF_LOG_E("Hello from penguin module");
 
-	result = PfOpenDebugContext(&debugContext);
-	PF_LOG_I(PF_DEBUG_CLASS_PENGUIN, "Hello from penguin module");
-
-	PF_LOG_I(PF_DEBUG_CLASS_CORE, "Hello from penguin module");
-
-	result = PfCloseDebugContext(&debugContext);
 	return result;
 }

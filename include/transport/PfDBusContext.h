@@ -9,15 +9,15 @@
 ****************************************************************************************************
 */
 
-#ifndef _PF_DBUS_H_
-#define _PF_DBUS_H_
+#ifndef _PF_DBUS_CONTEXT_H_
+#define _PF_DBUS_CONTEXT_H_
 
-#include "libprotocol/PfPacket.h"
+#include "core/PfCore.h"
 
 /**
 ****************************************************************************************************
-* @struct PfDBusControllerContext
-* @brief D-Bus controller context definition
+* @struct 	PfDBusControllerContext
+* @brief 	D-Bus controller context definition
 * @ingroup	PfTransport
 ****************************************************************************************************
 */
@@ -26,4 +26,24 @@ typedef struct
 	PfHeader header; ///< D-Bus controller header
 } PfDBusControllerContext;
 
-#endif	/* !_PF_DBUS_H_ */
+/**
+****************************************************************************************************
+* @brief	Open D-Bus controller context and alloc resources
+* @param 	[in,out] pContext pointer to the D-Bus controller context
+* @return 	PF_STATUS_OK on success, PF_STATUS_FAIL otherwise
+* @ingroup	PfTransport
+****************************************************************************************************
+*/
+PF_STATUS PFAPI PfOpenDBusControllerContext(PfDBusControllerContext* const pContext);
+
+/**
+****************************************************************************************************
+* @brief	Close D-Bus controller context and free resources
+* @param 	[in,out] pContext pointer to the D-Bus controller context
+* @return 	PF_STATUS_OK on success, PF_STATUS_FAIL otherwise
+* @ingroup	PfTransport
+****************************************************************************************************
+*/
+PF_STATUS PFAPI PfCloseDBusControllerContext(PfDBusControllerContext* const pContext);
+
+#endif	/* !_PF_DBUS_CONTEXT_H_ */

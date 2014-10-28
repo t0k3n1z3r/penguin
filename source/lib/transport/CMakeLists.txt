@@ -1,3 +1,17 @@
 #
 # Cmake file to build transport library
 #
+
+PROJECT(transport C)
+
+SET(PF_CORE_SRC PfTransport.c PfDBus.c PfDBusContext.c PfDBusNode.c)
+ADD_DEFINITIONS(-DPF_DEBUG_CLASS_DEFAULT=PF_DEBUG_CLASS_TRANSPORT)
+
+# Compiler options
+ADD_DEFINITIONS(-Wall -fPIC)
+
+INCLUDE_DIRECTORIES(${PF_PROJECT_DIR}/include ${PF_PROJECT_DIR}/include/transport)
+
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${PF_CORE_SRC})
+
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} core)

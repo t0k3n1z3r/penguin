@@ -12,7 +12,7 @@
 #ifndef _PF_PACKET_H_
 #define _PF_PACKET_H_
 
-#include "libcore/PfHeader.h"
+#include "core/PfHeader.h"
 
 /**
 ****************************************************************************************************

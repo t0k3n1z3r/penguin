@@ -9,6 +9,7 @@
 */
 
 #include "core/PfDebug.h"
+#include "transport/PfTransport.h"
 
 /**
 ****************************************************************************************************
@@ -25,6 +26,11 @@ int main(int argc, char* argv[])
 	PF_LOG_I("Hello from penguin module");
 	PF_LOG_W("Hello from penguin module");
 	PF_LOG_E("Hello from penguin module");
+
+	PfDBusControllerContext context;
+
+	PfOpenDBusControllerContext(&context);
+	PfCloseDBusControllerContext(&context);
 
 	return result;
 }

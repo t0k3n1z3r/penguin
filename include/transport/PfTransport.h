@@ -12,8 +12,6 @@
 #ifndef _PF_TRANSPORT_H_
 #define _PF_TRANSPORT_H_
 
-#include "PfDBusContext.h"
-
-void PFAPI CreateConnection(void);
+#include "PfDBus.h"
 
 #endif	/* !_PF_TRANSPORT_H_ */

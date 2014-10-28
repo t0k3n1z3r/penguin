@@ -104,6 +104,11 @@ typedef struct
 	*/
 	PF_DEBUG_LEVEL debugLevel;
 
+	/**
+	* @brief 	Message color for debug messages.
+	*/
+	PF_DEBUG_COLOR debugColor;
+
 } PfDebugContext;
 
 /**

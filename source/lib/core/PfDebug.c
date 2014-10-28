@@ -56,34 +56,6 @@ static const char* s_debugLevelAliases[] =
 
 /**
 ****************************************************************************************************
-* @brief 	This array is used to map message color to it's type and class
-* @see 		PF_DEBUG_LEVEL
-* @see 		PF_DEBUG_CLASS
-****************************************************************************************************
-*/
-static const char* s_debugColorAliases[] =
-{
-	/**
-	* @brief 	Log tag for error message (Red color)
-	* @see 		PF_DEBUG_LEVEL_ERROR
-	*/
-	"\031[0m",
-
-	/**
-	* @brief 	Log tag for warning message (Yellow color)
-	* @see 		PF_DEBUG_LEVEL_WARNING
-	*/
-	"\032[0m",
-
-	/**
-	* @brief 	Log tag for informational message (green/white)
-	* @see 		PF_DEBUG_LEVEL_INFO
-	*/
-	"\033[0m"
-};
-
-/**
-****************************************************************************************************
 * @brief	This array is used to map debug class to corresponding string for output
 * @see 		PF_DEBUG_CLASS
 ****************************************************************************************************
@@ -123,7 +95,8 @@ static const char* s_debugClassAliases[] =
 
 /**
 ****************************************************************************************************
-* @brief Array of debug contexts that may be used to split log message flow by modules
+* @brief 	Array of debug contexts that may be used to split log message flow by modules
+* @todo 	To implement usage of an array with debug contexts
 ****************************************************************************************************
 */
 static PfDebugContext s_debugContextArray[5] = 
@@ -151,10 +124,11 @@ PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const pContext)
 	if (NULL != pContext && pContext->header.size == sizeof(PfDebugContext))
 	{
 		s_debugContextArray[pContext->debugClass] = *pContext;
+		PF_LOG_I("Debug context was opened");
 	}
 	else
 	{
-		printf("Debug context is invalid!");
+		PF_LOG_E("Debug context is invalid!");
 	}
 	return result;
 }
@@ -164,9 +138,18 @@ PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const pContext)
 *
 ****************************************************************************************************
 */
-PF_STATUS PFAPI PfCloseDebugContext(PfDebugContext* const context)
+PF_STATUS PFAPI PfCloseDebugContext(PfDebugContext* const pContext)
 {
 	PF_STATUS result = PF_STATUS_NOT_IMPLEMENTED;
+
+	if (NULL != pContext && pContext->header.size == sizeof(PfDebugContext))
+	{
+		PF_LOG_I("Debug context was closed");
+	}
+	else
+	{
+		PF_LOG_E("Debug context is invalid!");
+	}
 
 	return result;
 }
@@ -224,6 +207,104 @@ static const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel)
 	return s_debugLevelAliases[debugLevel];
 }
 
+/**
+****************************************************************************************************
+* @brief 	Adjust color by debug class for every message
+* @param 	[in] debugClass Debug class of the message to be print
+* @see 		PF_DEBUG_COLOR
+* @return 	Constant value of the color type
+****************************************************************************************************
+*/
+static const PF_DEBUG_COLOR PfAdjustColorByClass(PF_DEBUG_CLASS debugClass)
+{
+	PF_DEBUG_COLOR result = PF_DEBUG_COLOR_WHITE;
+
+	switch(debugClass)
+	{
+		case PF_DEBUG_CLASS_UNDEFINED:
+		{
+			result = PF_DEBUG_COLOR_WHITE;
+		}
+		break;
+
+		case PF_DEBUG_CLASS_CORE:
+		{
+			result = PF_DEBUG_COLOR_GREEN;
+		}
+		break;
+
+		case PF_DEBUG_CLASS_PROTOCOL:
+		{
+			result = PF_DEBUG_COLOR_BLUE;
+		}
+		break;
+
+		case PF_DEBUG_CLASS_TRANSPORT:
+		{
+			result = PF_DEBUG_COLOR_CYAN;
+		}
+		break;
+
+		case PF_DEBUG_CLASS_PENGUIN:
+		{
+			result = PF_DEBUG_COLOR_MAGENTA;
+		}
+		break;
+
+		default:
+		{
+			PF_LOG_E("Unknown class! An error was occured = %d", debugClass);
+		}
+		break;
+	}
+
+	return result;
+}
+
+/**
+****************************************************************************************************
+* @brief 	Adjust color that will be applied to log message based on debugClass and debugLevel
+* @param 	[in] debugClass Debug class of the message to be print
+* @param 	[in] debugLevel Debug level of the message to be print
+* @see 		PF_DEBUG_COLOR
+* @return 	Constant value of the color type
+****************************************************************************************************
+*/
+static const PF_DEBUG_COLOR PfAdjustMessageColor(PF_DEBUG_CLASS debugClass,
+	PF_DEBUG_LEVEL debugLevel)
+{
+	PF_DEBUG_COLOR result = PF_DEBUG_COLOR_WHITE;
+
+	switch(debugLevel)
+	{
+		case PF_DEBUG_LEVEL_ERROR:
+		{
+			result = PF_DEBUG_COLOR_RED;
+		}
+		break;
+
+		case PF_DEBUG_LEVEL_WARNING:
+		{
+			result = PF_DEBUG_COLOR_YELLOW;
+		}
+		break;
+
+		case PF_DEBUG_LEVEL_INFO:
+		{
+			result = PfAdjustColorByClass(debugClass);
+		}
+		break;
+
+		default:
+		{
+			PF_LOG_E("Unknown level! Error was occured = %d", debugLevel);
+		}
+		break;
+	}
+
+	return result;
+}
+
 /*
 ****************************************************************************************************
 *
@@ -236,6 +317,10 @@ PF_STATUS PFAPI PfPrintLogMessage(const char* const pFunctionName, const int lin
 	va_list argumentList;
 	char buffer[PF_DEBUG_MESSAGE_SIZE] = {0};
 	size_t currentPosition = 0;
+
+	// Set color for messaging
+	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition,
+		"%c[%d;%dm", 27, 0, PfAdjustMessageColor(debugClass, debugLevel));
 
 	// Push time stamp to message header
 	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition,
@@ -260,6 +345,9 @@ PF_STATUS PFAPI PfPrintLogMessage(const char* const pFunctionName, const int lin
 		pFormatMessage, argumentList);
 
 	va_end(argumentList);
+
+	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition,
+		"%c[%dm", 27, 0);
 
 	result = PfOutputDebugString(buffer);
 

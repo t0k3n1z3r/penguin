@@ -159,30 +159,6 @@ PF_STATUS PFAPI PfOpenDebugContext(PfDebugContext* const pContext)
 	return result;
 }
 
-PF_STATUS PFAPI PfOutputDebugString(const char* const pMessage)
-{
-	PF_STATUS result = PF_STATUS_OK;
-
-	printf("%s\n", pMessage);
-
-	return result;
-}
-
-const char* PfConvertTimeToString(void)
-{
-	return "[00:00:00:000]";
-}
-
-const char* PfConvertDebugClassToString(PF_DEBUG_CLASS moduleClass)
-{
-	return s_debugClassAliases[moduleClass];
-}
-
-const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel)
-{
-	return s_debugLevelAliases[debugLevel];
-}
-
 /*
 ****************************************************************************************************
 *
@@ -195,6 +171,59 @@ PF_STATUS PFAPI PfCloseDebugContext(PfDebugContext* const context)
 	return result;
 }
 
+/**
+****************************************************************************************************
+* @brief 	Output debug string to the stream defined in the context
+* @param 	[in] pMessage Message to output
+* @todo 	Implement output based on context
+* @return	PF_STATUS_OK on success, SF_STATUS_FAIL otherwise
+****************************************************************************************************
+*/
+PF_STATUS PFAPI PfOutputDebugString(const char* const pMessage)
+{
+	PF_STATUS result = PF_STATUS_OK;
+
+	printf("%s\n", pMessage);
+
+	return result;
+}
+
+/**
+****************************************************************************************************
+* @brief 	Convert current time (time counting started on opening debug context) to string for
+*			loging
+* @return 	Constant C-style string
+****************************************************************************************************
+*/
+static const char* PfConvertTimeToString(void)
+{
+	return "[00:00:00:000]";
+}
+
+/**
+****************************************************************************************************
+* @brief 	Convert debug class (module type) to string for loging
+* @param 	[in] moduleClass Debug class of the message to be print
+* @return	Constant C-style string
+****************************************************************************************************
+*/
+static const char* PfConvertDebugClassToString(PF_DEBUG_CLASS moduleClass)
+{
+	return s_debugClassAliases[moduleClass];
+}
+
+/**
+****************************************************************************************************
+* @brief 	Convert debug level to string for loging
+* @param 	[in] debugLevel Debug level of the message to be print
+* @return	Constant C-style string
+****************************************************************************************************
+*/
+static const char* PfConvertLevelToString(PF_DEBUG_LEVEL debugLevel)
+{
+	return s_debugLevelAliases[debugLevel];
+}
+
 /*
 ****************************************************************************************************
 *
@@ -204,9 +233,9 @@ PF_STATUS PFAPI PfPrintLogMessage(const char* const pFunctionName, const int lin
 	PF_DEBUG_CLASS debugClass, PF_DEBUG_LEVEL debugLevel, const char* const pFormatMessage, ...)
 {
 	PF_STATUS result = PF_STATUS_OK;
-	va_list argumentList = {0};
+	va_list argumentList;
 	char buffer[PF_DEBUG_MESSAGE_SIZE] = {0};
-	int currentPosition = 0;
+	size_t currentPosition = 0;
 
 	// Push time stamp to message header
 	currentPosition += snprintf(buffer + currentPosition, PF_DEBUG_MESSAGE_SIZE - currentPosition,

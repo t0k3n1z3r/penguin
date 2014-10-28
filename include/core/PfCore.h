@@ -1,10 +1,21 @@
 /**
 ****************************************************************************************************
-* @file 	PfMonitor.c
-* @brief 	Penguin Framework [PF] process monitoring mechanisms implementation
-* @ingroup	PfMonitor
+* @file 	PfCore.h
+* @brief 	Penguin Framework [PF] core library interfaces
+* @defgroup	PfCore libcore
 * @author	Maksym Koshel (maks.koshel@gmail.com)
-* @date 	May 05, 2014
+* @date 	Apr 23, 2014
 * @copyright Maksym Koshel (c) 2014. All rights reserved.
 ****************************************************************************************************
 */
+
+#ifndef _PF_CORE_H_
+#define _PF_CORE_H_
+
+/**
+* @note PfTypes and PfStatus included in hte PfDebug.h
+*/
+#include "PfDebug.h"
+#include "PfHeader.h"
+
+#endif /* !_PF_CORE_H_ */

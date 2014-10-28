@@ -9,7 +9,7 @@
 ****************************************************************************************************
 */
 
-#include "PfTime.h"
+#include "core/PfTime.h"
 #include <time.h>
 
 /*
@@ -20,7 +20,7 @@
 Uqword PFAPI PfGetSystemTimeUsec(void)
 {
     struct timespec t;
-    clock_gettime(CLOCK_MONOTONIC, &t);
+    //clock_gettime(CLOCK_MONOTONIC, &t);
     return ((Uqword)t.tv_sec) * 1000000L + ((Uqword)t.tv_nsec) / 1000;
 }
 

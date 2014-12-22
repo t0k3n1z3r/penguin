@@ -4,7 +4,7 @@
 
 PROJECT(transport C)
 
-SET(PF_CORE_SRC PfTransport.c PfDBus.c PfDBusContext.c PfDBusNode.c)
+SET(PF_CORE_SRC PfTransport.c PfDBus.c PfDBusContext.c)
 ADD_DEFINITIONS(-DPF_DEBUG_CLASS_DEFAULT=PF_DEBUG_CLASS_TRANSPORT)
 
 # Compiler options

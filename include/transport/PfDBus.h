@@ -13,6 +13,5 @@
 #define _PF_DBUS_H_
 
 #include "PfDBusContext.h"
-#include "PfDBusNode.h"
 
 #endif	/* !_PF_DBUS_H_ */

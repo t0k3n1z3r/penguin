@@ -33,7 +33,7 @@ typedef enum
 	PF_DEBUG_CLASS_CORE		 	= 1, ///< libcore debug class
 	PF_DEBUG_CLASS_PROTOCOL 	= 2, ///< libprotocol class
 	PF_DEBUG_CLASS_TRANSPORT 	= 3, ///< libtransport class
-	PF_DEBUG_CLASS_PENGUIN		= 4, ///< Main application
+	PF_DEBUG_CLASS_PENGUIN		= 4, ///< Main application, Test and other staff
 	PF_DEBUG_CLASS_MAX 			= PF_DEBUG_CLASS_PENGUIN
 	
 } PF_DEBUG_CLASS;

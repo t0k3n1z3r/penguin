@@ -11,9 +11,6 @@
 
 #include <stdio.h>
 
-
-
-
 /**
 ****************************************************************************************************
 * @brief Entry point of the libcore test set implementation

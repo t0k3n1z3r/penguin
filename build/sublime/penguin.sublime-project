@@ -3,7 +3,9 @@
     [
         {
             "path": "../../",
-            "name": "Penguin Framework"
+            "name": "Penguin Framework",
+            "file_exclude_patterns": ["*.cmake", "CMakeCache.txt"],
+            "folder_exclude_patterns": ["CMakeFiles", "Testing"]
         }
     ],
     "settings":

@@ -15,7 +15,7 @@ ADD_TEST(PfCoreLibraryTest
 SET_TESTS_PROPERTIES(PfCoreLibraryTest
 						PROPERTIES
 						PASS_REGULAR_EXPRESSION
-						".*/[/d/d:/d/d:/d/d:/d/d/d/]/[^CORE$/]/[^I$/]/[.*/].*")
+						"//^//[.*")
 
 #
 # Add Penguin Framework Core Library test
@@ -25,25 +25,25 @@ SET_TESTS_PROPERTIES(PfLibcoreTest1 PROPERTIES DEPENDS PfCoreLibraryTest)
 SET_TESTS_PROPERTIES(PfLibcoreTest1
 						PROPERTIES
 						PASS_REGULAR_EXPRESSION
-						".*/[/d/d:/d/d:/d/d:/d/d/d/]/[^PENG$/]/[^I$/]/[.*/].*")
+						".*[/d/d:/d/d:/d/d:/d/d/d][^PENG$][^I$].*")
 
-ADD_TEST(PfLibcoreTest2 PfCoreTestLog 0 I'm error)
+ADD_TEST(PfLibcoreTest2 PfCoreTestLog 0 "I'm error")
 SET_TESTS_PROPERTIES(PfLibcoreTest2 PROPERTIES DEPENDS PfCoreLibraryTest)
 SET_TESTS_PROPERTIES(PfLibcoreTest2
 						PROPERTIES
 						PASS_REGULAR_EXPRESSION
-						".*/[/d/d:/d/d:/d/d:/d/d/d/]/[^PENG$/]/[^I$/]/[.*/].*")
+						".*[/d/d:/d/d:/d/d:/d/d/d][^PENG$][^I$].*")
 
-ADD_TEST(PfLibcoreTest3 PfCoreTestLog 1 I'm warning)
+ADD_TEST(PfLibcoreTest3 PfCoreTestLog 1 "I'm warning")
 SET_TESTS_PROPERTIES(PfLibcoreTest3 PROPERTIES DEPENDS PfCoreLibraryTest)
 SET_TESTS_PROPERTIES(PfLibcoreTest3
 						PROPERTIES
 						PASS_REGULAR_EXPRESSION
-						".*/[/d/d:/d/d:/d/d:/d/d/d/]/[^PENG$/]/[^I$/]/[.*/].*")
+						".*[/d/d:/d/d:/d/d:/d/d/d][^PENG$][^I$].*")
 
-ADD_TEST(PfLibcoreTest4 PfCoreTestLog 2 I'm info)
+ADD_TEST(PfLibcoreTest4 PfCoreTestLog 2 "I'm info")
 SET_TESTS_PROPERTIES(PfLibcoreTest4 PROPERTIES DEPENDS PfCoreLibraryTest)
 SET_TESTS_PROPERTIES(PfLibcoreTest4
 						PROPERTIES
 						PASS_REGULAR_EXPRESSION
-						".*/[/d/d:/d/d:/d/d:/d/d/d/]/[^PENG$/]/[^I$/]/[.*/].*")
+						".*[/d/d:/d/d:/d/d:/d/d/d][^PENG$][^I$].*")

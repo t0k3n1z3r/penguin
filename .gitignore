@@ -1,0 +1,6 @@
+CMakeCache*
+CMakeFiles*
+Makefile
+*.cmake
+*.so
+*.sublime-workspace

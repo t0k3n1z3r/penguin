@@ -1,5 +1,5 @@
 #
-# Root Cmake file of the Penguin Framework. It contains 2 major targets: build sources and doc.
+# Root Cmake file of the Penguin Project.
 #
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
@@ -14,11 +14,26 @@ PROJECT(Penguin)
 SET(PF_PROJECT_DIR ${CMAKE_SOURCE_DIR})
 
 #
-# Add new target test to the result Makefile
+# Compilation mode
 #
-ENABLE_TESTING()
+IF(NOT CMAKE_SOURCE_DIR STREQUAL "Release")
+	MESSAGE(STATUS "Project will be compiled in Debug mode")
+
+	ENABLE_TESTING()
+	ADD_DEFINITIONS(-DPF_BUILD_TYPE_DEBUG)
+	ADD_DEFINITIONS(-g -O0 -Wall)
+ELSE()
+	MESSAGE(STATUS "Project will be compiled in Release mode")
+
+	ADD_DEFINITIONS(-DPF_BUILD_TYPE_RELEASE)
+	ADD_DEFINITIONS(-O3 -Wall -Werror)
+ENDIF()
 
 #
-# Add source compilation target
+# Add compilation targets
 #
+ADD_SUBDIRECTORY(config)
 ADD_SUBDIRECTORY(source)
+ADD_SUBDIRECTORY(test)
+ADD_SUBDIRECTORY(doc)
+ADD_SUBDIRECTORY(examples)

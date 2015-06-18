@@ -41,14 +41,14 @@ typedef enum
     * @brief    Bad input arguments to the function
     ****************************************************************************
     */
-    PF_STATUS_BADARG = @PF_STATUS_BADARG_GENERATED@
+    PF_STATUS_BADARG = @PF_STATUS_BADARG_GENERATED@,
 
     /**
     ****************************************************************************
     * @brief    Operation is not implemented
     ****************************************************************************
     */
-    PF_STATUS_NOT_IMPLEMENTED = @PF_STATUS_NOT_IMPLEMENTED_GENERATED@,
+    PF_STATUS_NOT_IMPLEMENTED = @PF_STATUS_NOT_IMPLEMENTED_GENERATED@
 
 } PF_STATUS;
 

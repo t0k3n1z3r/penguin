@@ -82,7 +82,6 @@ penguin_EXTERNAL_OBJECTS =
 examples/penguin: examples/CMakeFiles/penguin.dir/PfMain.c.o
 examples/penguin: examples/CMakeFiles/penguin.dir/build.make
 examples/penguin: source/lib/core/libcore.so
-examples/penguin: source/lib/transport/libtransport.so
 examples/penguin: source/lib/core/libcore.so
 examples/penguin: examples/CMakeFiles/penguin.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking C executable penguin"

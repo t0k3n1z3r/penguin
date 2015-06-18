@@ -17,11 +17,11 @@
 *
 ****************************************************************************************************
 */
-Uqword PFAPI PfGetSystemTimeUsec(void)
+uint64_t PFAPI PfGetSystemTimeUsec(void)
 {
     struct timespec t;
-    //clock_gettime(CLOCK_MONOTONIC, &t);
-    return ((Uqword)t.tv_sec) * 1000000L + ((Uqword)t.tv_nsec) / 1000;
+    clock_gettime(CLOCK_MONOTONIC, &t);
+    return ((uint64_t)t.tv_sec) * 1000000L + ((uint64_t)t.tv_nsec) / 1000;
 }
 
 /*
@@ -29,7 +29,7 @@ Uqword PFAPI PfGetSystemTimeUsec(void)
 *
 ****************************************************************************************************
 */
-void PFAPI SfParseTimeStructure(PfTime* const pTime, Uqword rsec)
+void PFAPI SfParseTimeStructure(PfTime* const pTime, uint64_t rsec)
 {
     pTime->usec = rsec % 1000;
     rsec /= 1000;
@@ -41,7 +41,7 @@ void PFAPI SfParseTimeStructure(PfTime* const pTime, Uqword rsec)
     rsec /= 60;
     pTime->hours	= rsec % 24;
     rsec /= 24;
-    pTime->days = (Udword)rsec;
+    pTime->days = (uint8_t)rsec;
 }
 
 /*
@@ -49,7 +49,7 @@ void PFAPI SfParseTimeStructure(PfTime* const pTime, Uqword rsec)
 *
 ****************************************************************************************************
 */
-PfTime PFAPI PfGetTimeStructure(Uqword rsec)
+PfTime PFAPI PfGetTimeStructure(uint64_t rsec)
 {
 	PfTime currentTime;
 	
@@ -63,7 +63,7 @@ PfTime PFAPI PfGetTimeStructure(Uqword rsec)
     rsec /= 60;
     currentTime.hours	= rsec % 24;
     rsec /= 24;
-    currentTime.days = (Udword)rsec;
+    currentTime.days = (uint64_t)rsec;
 
     return currentTime;
 }

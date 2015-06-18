@@ -3,5 +3,5 @@
 #
 
 ADD_SUBDIRECTORY(core)
-ADD_SUBDIRECTORY(protocol)
-ADD_SUBDIRECTORY(transport)
+#ADD_SUBDIRECTORY(protocol)
+#ADD_SUBDIRECTORY(transport)

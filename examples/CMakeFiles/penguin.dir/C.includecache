@@ -12,7 +12,13 @@ core/PfDebug.h
 transport/PfTransport.h
 /home/t0k3n1z3r/Projects/penguin/examples/transport/PfTransport.h
 
-include/core/PfConfig.h
+include/auto-generated/PfConfig.h
+
+include/auto-generated/PfStatus.h
+
+include/auto-generated/PfTypes.h
+stdint.h
+-
 
 include/core/PfCore.h
 PfDebug.h
@@ -21,22 +27,16 @@ PfHeader.h
 include/core/PfHeader.h
 
 include/core/PfDebug.h
+auto-generated/PfConfig.h
+include/core/auto-generated/PfConfig.h
+auto-generated/PfStatus.h
+include/core/auto-generated/PfStatus.h
 PfHeader.h
 include/core/PfHeader.h
-PfStatus.h
-include/core/PfStatus.h
-PfConfig.h
-include/core/PfConfig.h
 
 include/core/PfHeader.h
-PfTypes.h
-include/core/PfTypes.h
-
-include/core/PfStatus.h
-
-include/core/PfTypes.h
-stdint.h
--
+auto-generated/PfTypes.h
+include/core/auto-generated/PfTypes.h
 
 include/transport/PfDBus.h
 PfDBusContext.h

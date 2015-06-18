@@ -13,7 +13,7 @@
 #ifndef _PF_HEADER_H_
 #define _PF_HEADER_H_
 
-#include "PfTypes.h"
+#include "auto-generated/PfTypes.h"
 
 /**
 ****************************************************************************************************
@@ -37,8 +37,8 @@ typedef enum
 */
 typedef struct
 {
-	Udword size; ///< Owner structure size
-	Udword type; ///< Owner structure type
+	uint32_t size; ///< Owner structure size
+	uint32_t type; ///< Owner structure type
 	PF_CONTEXT_STATE state : 32; ///< Owner structure state
 } PfHeader;
 

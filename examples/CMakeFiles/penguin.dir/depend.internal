@@ -3,12 +3,12 @@
 
 examples/CMakeFiles/penguin.dir/PfMain.c.o
  /home/t0k3n1z3r/Projects/penguin/examples/PfMain.c
- include/core/PfConfig.h
+ include/auto-generated/PfConfig.h
+ include/auto-generated/PfStatus.h
+ include/auto-generated/PfTypes.h
  include/core/PfCore.h
  include/core/PfDebug.h
  include/core/PfHeader.h
- include/core/PfStatus.h
- include/core/PfTypes.h
  include/transport/PfDBus.h
  include/transport/PfDBusContext.h
  include/transport/PfTransport.h

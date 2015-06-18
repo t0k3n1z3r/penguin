@@ -4,3 +4,4 @@ Makefile
 *.cmake
 *.so
 *.sublime-workspace
+auto-generated

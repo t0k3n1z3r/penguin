@@ -8,10 +8,15 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 #
 PROJECT(Penguin)
 
+SET(PROJECT_CABR	"PF")
+SET(PROJECT_SABR	"Pf")
+
 #
 # Set project root directory
 #
 SET(PF_PROJECT_DIR ${CMAKE_SOURCE_DIR})
+
+
 
 #
 # Compilation mode

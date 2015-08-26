@@ -5,3 +5,5 @@ Makefile
 *.so
 *.sublime-workspace
 auto-generated
+Testing
+doc/generated

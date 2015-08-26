@@ -49,6 +49,9 @@ CONFIGURE_FILE("${PF_PROJECT_DIR}/config/code/PfTypes.h.in"
 CONFIGURE_FILE("${PF_PROJECT_DIR}/config/code/PfLog.h.in"
                "${PF_PROJECT_DIR}/include/auto-generated/PfLog.h")
 
+CONFIGURE_FILE("${PF_PROJECT_DIR}/config/doc/penguin.doxygen.in"
+			   "${PF_PROJECT_DIR}/doc/penguin.doxygen")
+
 
 
 MESSAGE(STATUS "Configuring the project")

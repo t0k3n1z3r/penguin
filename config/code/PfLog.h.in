@@ -15,52 +15,48 @@
 
 /**
 ********************************************************************************
-* @enum         PF_DEBUG_LEVEL
+* @enum         PF_LOG_LEVEL
 * @brief        This enum defines all possible debug levels. If project was
-*               compiled with MAX degug level PF_DEBUG_LEVEL_ERROR, it means
+*               compiled with MAX degug level PF_LOG_LEVEL_ERROR, it means
 *               that only ERROR messages will be printed to the output buffer.
 ********************************************************************************
 */
 typedef enum
 {
     /**
-    * @warning ATTENTION!: when you change this enumeration you should change
-    *   DEBUG_CLASS_ALIASES array. It is placed in PfDebug.c file.
+    ****************************************************************************
+    * @brief    Error level message descriptor
+    ****************************************************************************
     */
+    PF_LOG_LEVEL_ERROR    = @PF_LOG_LEVEL_ERROR_GENERATED@,
 
     /**
     ****************************************************************************
-    * @brief    Debug level ERROR
+    * @brief    Warning level message descriptor
     ****************************************************************************
     */
-    PF_DEBUG_LEVEL_ERROR        = @PF_DEBUG_LEVEL_ERROR_GENERATED@,
+    PF_LOG_LEVEL_WARNING  = @PF_LOG_LEVEL_WARNING_GENERATED@,
 
     /**
     ****************************************************************************
-    * @brief    Debug level WARNING
+    * @brief    Information level message descriptor
     ****************************************************************************
     */
-    PF_DEBUG_LEVEL_WARNING      = @PF_DEBUG_LEVEL_WARNING_GENERATED@,
+    PF_LOG_LEVEL_INFO     = @PF_LOG_LEVEL_INFO_GENERATED@,
 
     /**
     ****************************************************************************
-    * @brief    Debug level INFORMATION
+    * @brief    Debug level message descriptor
     ****************************************************************************
     */
-    PF_DEBUG_LEVEL_INFO         = @PF_DEBUG_LEVEL_INFO_GENERATED@,
+    PF_LOG_LEVEL_DEBUG    = @PF_LOG_LEVEL_DEBUG_GENERATED@,
+    PF_LOG_LEVEL_MAX      = PF_LOG_LEVEL_DEBUG
 
-    /**
-    ****************************************************************************
-    * @brief    Maximal debug level
-    ****************************************************************************
-    */
-    PF_DEBUG_LEVEL_MAX          = @PF_DEBUG_LEVEL_MAX_GENERATED@
-
-} PF_DEBUG_LEVEL;
+} PF_LOG_LEVEL;
 
 /**
 ********************************************************************************
-* @enum         PF_DEBUG_CLASS
+* @enum         PF_LOG_CLASS
 * @brief        This enum defines all possible debug classes. For each log
 *               message will be printed a tag which is mapped to corresponding
 *               debug class.
@@ -69,52 +65,42 @@ typedef enum
 typedef enum
 {
     /**
-    * @warning ATTENTION!: when you change this enumeration you should change
-    *   DEBUG_CLASS_ALIASES array. It is placed in PfDebug.c file.
+    ****************************************************************************
+    * @brief    Undefined log class
+    * @note     Enabled by default
+    ****************************************************************************
     */
+    PF_LOG_CLASS_UNDEFINED = @PF_LOG_CLASS_UNDEFINED_GENERATED@,
 
     /**
     ****************************************************************************
-    * @brief    Undefined class
+    * @brief    Core component log class
     ****************************************************************************
     */
-    PF_DEBUG_CLASS_UNDEFINED    = @PF_DEBUG_CLASS_UNDEFINED_GENERATED@,
+    PF_LOG_CLASS_CORE      = @PF_LOG_CLASS_CORE_GENERATED@,
 
     /**
     ****************************************************************************
-    * @brief    libcore debug class
+    * @brief    Propotocol component log class
     ****************************************************************************
     */
-    PF_DEBUG_CLASS_CORE         = @PF_DEBUG_CLASS_CORE_GENERATED@,
+    PF_LOG_CLASS_PROTOCOL  = @PF_LOG_CLASS_PROTOCOL_GENERATED@,
 
     /**
     ****************************************************************************
-    * @brief    libprotocol class
+    * @brief    Transport component log class
     ****************************************************************************
     */
-    PF_DEBUG_CLASS_PROTOCOL     = @PF_DEBUG_CLASS_PROTOCOL_GENERATED@,
+    PF_LOG_CLASS_TRANSPORT = @PF_LOG_CLASS_TRANSPORT_GENERATED@,
 
     /**
     ****************************************************************************
-    * @brief    libtransport class
+    * @brief    Penguin component log class
     ****************************************************************************
     */
-    PF_DEBUG_CLASS_TRANSPORT    = @PF_DEBUG_CLASS_TRANSPORT_GENERATED@,
-
-    /**
-    ****************************************************************************
-    * @brief    Main application, Test and other staff
-    ****************************************************************************
-    */
-    PF_DEBUG_CLASS_PENGUIN      = @PF_DEBUG_CLASS_PENGUIN_GENERATED@,
-
-    /**
-    ****************************************************************************
-    * @brief    libprotocol class
-    ****************************************************************************
-    */
-    PF_DEBUG_CLASS_MAX          = @PF_DEBUG_CLASS_MAX_GENERATED@
+    PF_LOG_CLASS_PENGUIN   = @PF_LOG_CLASS_PENGUIN_GENERATED@,
+    PF_LOG_CLASS_MAX          = PF_LOG_CLASS_PENGUIN
     
-} PF_DEBUG_CLASS;
+} PF_LOG_CLASS;
 
 #endif  /* !_PF_LOG_H_ */

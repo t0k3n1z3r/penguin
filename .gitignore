@@ -2,9 +2,11 @@ CMakeCache*
 CMakeFiles*
 Makefile
 *.cmake
-*.so
+*.so*
 *.sublime-workspace
 auto-generated
 Testing
 doc/generated
 examples/CMakeFiles*
+examples/cmake*
+examples/Makefile

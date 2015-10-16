@@ -1,1 +1,0 @@
-/usr/bin/cc      CMakeFiles/penguin.dir/PfMain.c.o  -o penguin -rdynamic ../source/lib/core/libcore.so -ltransport ../source/lib/core/libcore.so -Wl,-rpath,/home/t0k3n1z3r/Projects/penguin/source/lib/core 

@@ -7,3 +7,4 @@ Makefile
 auto-generated
 Testing
 doc/generated
+examples/CMakeFiles*

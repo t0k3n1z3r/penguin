@@ -1,7 +1,6 @@
 #
 # Cmake file to build CORE library of the Penguin Framework
 #
-
 PROJECT(core C)
 
 SET(PF_CORE_SRC PfDebug.c PfTime.c PfCore.c)
@@ -13,3 +12,4 @@ ADD_DEFINITIONS(-Wall -fPIC)
 INCLUDE_DIRECTORIES(${PF_PROJECT_DIR}/include)
 
 ADD_LIBRARY(${PROJECT_NAME} SHARED ${PF_CORE_SRC})
+SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES VERSION ${PF_VERSION})

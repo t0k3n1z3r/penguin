@@ -1,10 +1,10 @@
 /**
 ****************************************************************************************************
-* @file 	PfCore.c
-* @brief 	Penguin Framework [PF] Core component entry point
-* @ingroup	PfCore
-* @author	Maksym Koshel (maks.koshel@gmail.com)
-* @date 	Oct 28, 2014
+* @file     PfCore.c
+* @brief    Penguin Framework [PF] Core component entry point
+* @ingroup  PfCore
+* @author   Maksym Koshel (maks.koshel@gmail.com)
+* @date     Oct 28, 2014
 * @copyright Maksym Koshel (c) 2014. All rights reserved.
 ****************************************************************************************************
 */
@@ -13,16 +13,16 @@
 
 /**
 ****************************************************************************************************
-* @brief 	Constructor of the CORE component
-* @return 	void
+* @brief    Constructor of the CORE component
+* @return   void
 ****************************************************************************************************
 */
 static void PfCoreInit(void) __attribute__((constructor));
 
 /**
 ****************************************************************************************************
-* @brief 	Destructor of the CORE component
-* @return 	void
+* @brief    Destructor of the CORE component
+* @return   void
 ****************************************************************************************************
 */
 static void PfCoreUninit(void) __attribute__((destructor));
@@ -34,7 +34,7 @@ static void PfCoreUninit(void) __attribute__((destructor));
 */
 void PfCoreInit(void)
 {
-	PF_LOG_I("Init has been done");
+
 }
 
 /*
@@ -44,5 +44,5 @@ void PfCoreInit(void)
 */
 void PfCoreUninit(void)
 {
-	PF_LOG_I("Uninit has been done");
+
 }

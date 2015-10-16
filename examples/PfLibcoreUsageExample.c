@@ -10,6 +10,7 @@
 */
 
 #include <stdio.h>
+#include "libcore/PfDebug.h"
 
 /**
 ****************************************************************************************************
@@ -22,6 +23,9 @@
 */
 int main(int argc, char* argv[])
 {
-	printf("This is an example of the libcore usage\n");
+	WD_LOG_D("This is an example of the libcore usage");
+	WD_LOG_I("This is an example of the libcore usage");
+	WD_LOG_W("This is an example of the libcore usage");
+	WD_LOG_E("This is an example of the libcore usage");
 	return 0;
 }

@@ -23,14 +23,10 @@ int main(int argc, char* argv[])
 {
 	PF_STATUS result = PF_STATUS_FAIL;
 
+	PF_LOG_D("Hello from penguin module");
 	PF_LOG_I("Hello from penguin module");
 	PF_LOG_W("Hello from penguin module");
 	PF_LOG_E("Hello from penguin module");
-
-	PfDBusControllerContext context;
-
-	PfOpenDBusControllerContext(&context);
-	PfCloseDBusControllerContext(&context);
 
 	return result;
 }
